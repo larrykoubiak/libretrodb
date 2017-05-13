@@ -3,7 +3,7 @@ LIBRETRODB_DIR      := .
 LIBRETRO_COMM_DIR   := deps/libretro-common
 INCFLAGS             = -I. -I$(LIBRETRO_COMM_DIR)/include
 
-TARGETS              = rmsgpack_test libretrodb_tool c_converter
+TARGETS              = rmsgpack_test libretrodb_tool c_converter xml_converter
 
 ifeq ($(DEBUG), 1)
 CFLAGS               = -g -O0 -Wall
@@ -46,9 +46,19 @@ RARCHDB_TOOL_OBJS := $(RARCHDB_TOOL_C:.c=.o)
 RMSGPACK_C = \
 			$(LIBRETRODB_DIR)/rmsgpack.c \
 			$(LIBRETRODB_DIR)/rmsgpack_test.c \
-			 $(LIBRETRO_COMMON_C)
+			$(LIBRETRO_COMMON_C)
 
 RMSGPACK_OBJS := $(RMSGPACK_C:.c=.o)
+
+XML_CONVERTER_C = \
+			$(LIBRETRODB_DIR)/xml_converter.c \
+			$(LIBRETRO_COMM_DIR)/formats/xml/rxml.c \
+			$(LIBRETRO_COMM_DIR)/compat/compat_posix_string.c \
+			$(LIBRETRO_COMM_DIR)/compat/compat_strl.c \
+			$(LIBRETRO_COMM_DIR)/string/stdstring.c \
+			$(LIBRETRO_COMMON_C)
+			
+XML_CONVERTER_OBJS := $(XML_CONVERTER_C:.c=.o)
 
 TESTLIB_FLAGS = $(CFLAGS) -shared -fpic
 
@@ -67,6 +77,9 @@ libretrodb_tool: $(RARCHDB_TOOL_OBJS)
 
 rmsgpack_test: $(RMSGPACK_OBJS)
 	$(CC) $(INCFLAGS) $(RMSGPACK_OBJS) -g -o $@
+	
+xml_converter: $(XML_CONVERTER_OBJS)
+	$(CC) $(INCFLAGS) $(XML_CONVERTER_OBJS) -o $@
 
 clean:
-	rm -rf $(TARGETS) $(C_CONVERTER_OBJS) $(RARCHDB_TOOL_OBJS) $(RMSGPACK_OBJS) $(TESTLIB_OBJS) 
+	rm -rf $(TARGETS) $(C_CONVERTER_OBJS) $(RARCHDB_TOOL_OBJS) $(RMSGPACK_OBJS) $(TESTLIB_OBJS) $(XML_CONVERTER_OBJS)
