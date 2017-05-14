@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define RXML_TEST
 #include <formats/rxml.h>
 
 #include "libretrodb.h"
