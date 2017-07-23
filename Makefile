@@ -57,7 +57,7 @@ XML_CONVERTER_C = \
 			$(LIBRETRO_COMM_DIR)/compat/compat_strl.c \
 			$(LIBRETRO_COMM_DIR)/string/stdstring.c \
 			$(LIBRETRO_COMMON_C)
-			
+
 XML_CONVERTER_OBJS := $(XML_CONVERTER_C:.c=.o)
 
 TESTLIB_FLAGS = $(CFLAGS) -shared -fpic
@@ -77,9 +77,10 @@ libretrodb_tool: $(RARCHDB_TOOL_OBJS)
 
 rmsgpack_test: $(RMSGPACK_OBJS)
 	$(CC) $(INCFLAGS) $(RMSGPACK_OBJS) -g -o $@
-	
+
 xml_converter: $(XML_CONVERTER_OBJS)
 	$(CC) $(INCFLAGS) $(XML_CONVERTER_OBJS) -o $@
 
 clean:
 	rm -rf $(TARGETS) $(C_CONVERTER_OBJS) $(RARCHDB_TOOL_OBJS) $(RMSGPACK_OBJS) $(TESTLIB_OBJS) $(XML_CONVERTER_OBJS)
+
